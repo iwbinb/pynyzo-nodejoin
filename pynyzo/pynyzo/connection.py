@@ -3,11 +3,11 @@ Nyzo connection layer.
 Raw bytes over sockets, with 4 bytes len prefix.
 Adapted from eggpool's bismuth code
 """
-
 import socket
 import struct
 from time import time
 import threading
+import socks
 
 from pynyzo.helpers import base_app_log
 from pynyzo.message import Message
@@ -23,13 +23,17 @@ __version__ = '0.1.0'
 class Connection(object):
     """Connection to a Nyzo Node. Handles auto reconnect when needed"""
 
-    __slots__ = ('app_log', 'ip', 'port', 'verbose', 'sdef', 'stats', 'last_activity', 'command_lock', 'raw')
+    __slots__ = ('app_log', 'ip', 'port', 'verbose', 'sdef', 'stats', 'last_activity', 'command_lock', 'raw',
+                 'socks_host', 'socks_port')
 
-    def __init__(self, ip: str, port: int=9444, verbose: bool=False, app_log: object=None):
+    def __init__(self, ip: str, port: int=9444, verbose: bool=False, app_log: object=None,
+                 socks_host: str = None, socks_port: int = None):
         self.app_log = base_app_log(app_log)
         self.ip = ip
         self.port = port
         self.verbose = verbose
+        self.socks_host = socks_host
+        self.socks_port = socks_port
         self.sdef = None
         self.last_activity = 0
         self.command_lock = threading.Lock()
@@ -41,7 +45,11 @@ class Connection(object):
             try:
                 if self.verbose:
                     self.app_log.info(f"Connecting to {self.ip}:{self.port}")
-                self.sdef = socket.socket()
+                if self.socks_host is not None and self.socks_port is not None:
+                    self.sdef = socks.socksocket()
+                    self.sdef.set_proxy(socks.SOCKS5, self.socks_host, self.socks_port)
+                else:
+                    self.sdef = socket.socket()
                 self.sdef.connect((self.ip, self.port))
                 self.last_activity = time()
             except Exception as e:
