@@ -10,7 +10,7 @@ async def show(proxies):
 proxies = asyncio.Queue()
 broker = Broker(proxies)
 tasks = asyncio.gather(
-    broker.find(types=['SOCKS5', 'SOCKS4'], limit=1000),
+    broker.find(types=['SOCKS5', 'SOCKS4'], limit=1000, timeout=5),
     show(proxies))
 
 loop = asyncio.get_event_loop()
