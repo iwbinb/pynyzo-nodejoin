@@ -42,7 +42,7 @@ def test_one():
 
     key = kl[1]
     port = kl[0]
-    port = 9001
+    port = 9050
     host = '127.0.0.1'
     host = '79.137.33.24'
     nport = 9444
