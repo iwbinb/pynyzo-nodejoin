@@ -42,9 +42,9 @@ def test_one():
 
     key = kl[1]
     port = kl[0]
-    port = 9050
+    port = 9001
     host = '127.0.0.1'
-    host = '9001'
+    host = '104.200.20.46'
     nport = 9444
     user = 'xantyp' + str(port)
 
