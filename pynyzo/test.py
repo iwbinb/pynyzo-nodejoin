@@ -44,7 +44,7 @@ def test_one():
     port = kl[0]
     port = 9050
     host = '127.0.0.1'
-    host = '104.200.20.46'
+    host = '9001'
     nport = 9444
     user = 'xantyp' + str(port)
 
