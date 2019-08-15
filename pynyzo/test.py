@@ -63,7 +63,7 @@ def test_one():
     for i in il:
         st = Thread(target=call, args=[i])
         st.start()
-        st.join(timeout=0.5)  # configure
+        st.join(timeout=1.2)  # configure
         stop_it.set()
 
 test_one()
