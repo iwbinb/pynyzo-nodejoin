@@ -1,4 +1,4 @@
-from pynyzo.node_join_func import propagate
+from node_join_func import propagate
 
 def keys_list():
     with open('test2.txt', 'r') as f:
