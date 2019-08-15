@@ -48,6 +48,7 @@ def test_one():
     kl = kl[4]
 
     key = kl[1]
+    print('Using private key {}'.format(str(key)))
     port = kl[0]
     port = 63190
     host = '104.238.97.230'
