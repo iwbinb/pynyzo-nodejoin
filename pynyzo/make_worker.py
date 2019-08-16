@@ -1,7 +1,6 @@
 from redis import Redis
 from rq import Queue, Worker
 
-redis = Redis()
-queue = Queue('ipflow')
+q = Queue('ipflow', connection=Redis())
 
-worker = Worker([queue], connection=redis)
+worker = Worker([q])
