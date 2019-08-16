@@ -114,7 +114,7 @@ def propagate(socks_host, socks_port):
         res = connection.fetch(message)
         print(res.to_json())
 
-# propagate('95.216.184.40', '178.197.249.213', 1080)
+propagate('178.197.249.213', 1080)
 #
 #
 # propagate('verifier1.nyzo.co', '178.197.249.213', 1080)
