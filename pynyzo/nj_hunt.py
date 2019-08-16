@@ -1,6 +1,10 @@
 import asyncio
 from proxybroker import Broker
-import nj_feed
+from redis import Redis
+from rq import Queue
+from node_join_func import propagate
+
+q = Queue('ipflow', connection=Redis())
 
 def add_ip(host, port):
     with open('data/ips', 'a') as f:
@@ -13,7 +17,7 @@ async def show(proxies):
         add_ip(proxy.host, proxy.port)
         print('Added IP to file and queue: {}:{}'.format(proxy.host, proxy.port))
         q.enqueue(propagate, args=(proxy.host, proxy.port), job_timeout=86400)
-        
+
 
 proxies = asyncio.Queue()
 broker = Broker(proxies)
