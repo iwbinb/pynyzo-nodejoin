@@ -148,7 +148,7 @@ def propagate(socks_host, socks_port):
         stop_it.set()
 
 
-propagate('145.239.81.69', 1080)
+propagate('212.237.34.93', 6483)
 #
 #
 # propagate('verifier1.nyzo.co', '178.197.249.213', 1080)
