@@ -23,7 +23,7 @@ def ips_list():
     for i in res:
         r = i.split('</td>')
         try:
-            if 'In Cycle' in r[6]:
+            if 'in' in r[6].lower():
                 ip = r[0].split('>')
                 ip = ip[len(ip)-1]
                 print(ip)
@@ -67,5 +67,5 @@ def test_one():
         st.join(timeout=1.2)  # configure
         stop_it.set()
 
-test_one()
-#ips_list()
+# test_one()
+ips_list()

@@ -58,66 +58,71 @@ def load_from_data(s_ip):
         return data_dict
 
 
-def propagate(target_ip, socks_host, socks_port):
+def propagate(socks_host, socks_port):
 
-    private_key = None
-    username = None
+    from test_alt import ips_list
 
-    rres = load_from_data(socks_host)
-    if rres is None:
-        res = assign_to_ip(socks_host)
-        username = res['name']
-        private_key = res['private_key']
-    else:
-        username = rres['name']
-        private_key = rres['private_key']
+    ips = ips_list()
 
-    # print(private_key)
+    for target_ip in ips_list:
+        private_key = None
+        username = None
 
-    verbose = True
-    target_port = 9444
+        rres = load_from_data(socks_host)
+        if rres is None:
+            res = assign_to_ip(socks_host)
+            username = res['name']
+            private_key = res['private_key']
+        else:
+            username = rres['name']
+            private_key = rres['private_key']
 
-    app_log = tornado_logger()
+        # print(private_key)
 
-    config.load()
-    connection_args_dict = dict(verbose=verbose)
-    message_args_dict = dict(app_log=app_log)
+        verbose = True
+        target_port = 9444
 
-    message_args_dict.update({
-        'timestamp': int(time() * 1000)
-        # 'sourceNodePrivateKey': private_key
-    })
+        app_log = tornado_logger()
 
-    if (socks_host is None and socks_port is not None) or (
-        socks_host is not None and socks_port is None):
-        raise Exception('Socks port or socks host is not provided')
+        config.load()
+        connection_args_dict = dict(verbose=verbose)
+        message_args_dict = dict(app_log=app_log)
 
-    if socks_host is not None:
-        connection_args_dict.update({
-            'socks_host': socks_host,
-            'socks_port': socks_port
+        message_args_dict.update({
+            'timestamp': int(time() * 1000)
+            # 'sourceNodePrivateKey': private_key
         })
 
-    connection = Connection(target_ip, **connection_args_dict)
+        if (socks_host is None and socks_port is not None) or (
+            socks_host is not None and socks_port is None):
+            raise Exception('Socks port or socks host is not provided')
 
-    # with open('/root/pynyzo-nodejoin/pynyzo/tmp/verifier_private_seed', 'w') as f:
-    #     f.write(private_key)
-    print(private_key)
+        if socks_host is not None:
+            connection_args_dict.update({
+                'socks_host': socks_host,
+                'socks_port': socks_port
+            })
 
-    request = NodeJoin(target_port, username, app_log=app_log)
-    message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
-    res = connection.fetch(message)
-    print(res.to_json())
+        connection = Connection(target_ip, **connection_args_dict)
 
-propagate('95.216.184.40', '178.197.249.213', 1080)
+        # with open('/root/pynyzo-nodejoin/pynyzo/tmp/verifier_private_seed', 'w') as f:
+        #     f.write(private_key)
+        # print(private_key)
 
+        request = NodeJoin(target_port, username, app_log=app_log)
+        message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
+        res = connection.fetch(message)
+        print(res.to_json())
 
-propagate('verifier1.nyzo.co', '178.197.249.213', 1080)
-propagate('verifier2.nyzo.co', '178.197.249.213', 1080)
-propagate('verifier3.nyzo.co', '178.197.249.213', 1080)
-propagate('verifier4.nyzo.co', '178.197.2449.213', 1080)
-propagate('verifier5.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier6.nyzo.co', '178.197.2448.213', 1080)
-propagate('verifier7.nyzo.co', '178.197.2448.213', 1080)
-propagate('verifier8.nyzo.co', '178.197.244448.213', 1080)
-propagate('verifier9.nyzo.co', '178.197.248.213', 1080)
+# propagate('95.216.184.40', '178.197.249.213', 1080)
+#
+#
+# propagate('verifier1.nyzo.co', '178.197.249.213', 1080)
+# propagate('verifier2.nyzo.co', '178.197.249.213', 1080)
+# propagate('verifier3.nyzo.co', '178.197.249.213', 1080)
+# propagate('verifier4.nyzo.co', '178.197.2449.213', 1080)
+# propagate('verifier5.nyzo.co', '178.197.248.213', 1080)
+# propagate('verifier6.nyzo.co', '178.197.2448.213', 1080)
+# propagate('verifier7.nyzo.co', '178.197.2448.213', 1080)
+# propagate('verifier8.nyzo.co', '178.197.244448.213', 1080)
+# propagate('verifier9.nyzo.co', '178.197.248.213', 1080)
