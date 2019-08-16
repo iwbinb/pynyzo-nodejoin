@@ -1,3 +1,8 @@
-from redis import Redis
-from rq import Queue, Worker
-worker = Worker(Queue('ipflow'), connection=Redis())
+import sys
+from rq import Connection, Worker
+
+with Connection():
+    qs = sys.argv[1:] or ['ipflow']
+
+    w = Worker(qs)
+    w.work()
