@@ -86,9 +86,12 @@ def load_from_data(s_ip):
 
 
 def propagate(socks_host, socks_port):
+    import subprocess
+    from threading import Thread, Event
+    stop_it = Event()
     ips = ips_list()
 
-    for target_ip in ips:
+    def call(target_ip):
         private_key = None
         username = None
 
@@ -118,7 +121,7 @@ def propagate(socks_host, socks_port):
         })
 
         if (socks_host is None and socks_port is not None) or (
-            socks_host is not None and socks_port is None):
+                socks_host is not None and socks_port is None):
             raise Exception('Socks port or socks host is not provided')
 
         if socks_host is not None:
@@ -127,16 +130,23 @@ def propagate(socks_host, socks_port):
                 'socks_port': socks_port
             })
 
-        connection = Connection(target_ip, **connection_args_dict)
+        try:
+            connection = Connection(target_ip, **connection_args_dict)
 
-        # with open('/root/pynyzo-nodejoin/pynyzo/tmp/verifier_private_seed', 'w') as f:
-        #     f.write(private_key)
-        # print(private_key)
+            request = NodeJoin(target_port, username, app_log=app_log)
+            message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
+            res = connection.fetch(message)
+            print(res.to_json())
+        except:
+            print('Skipped {}'.format(target_ip))
+            pass
 
-        request = NodeJoin(target_port, username, app_log=app_log)
-        message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
-        res = connection.fetch(message)
-        print(res.to_json())
+    for i in ips:
+        st = Thread(target=call, args=[i])
+        st.start()
+        st.join(timeout=1)  # configure
+        stop_it.set()
+
 
 propagate('178.197.249.213', 1080)
 #
