@@ -45,6 +45,7 @@ class Message(ABC):
         self._type = a_type
         self._content = content
         self._valid = True
+        self.sourceNodePrivateKey =
 
         # if sourceNodeIdentifier is None:
         self._timestamp = int(time()*1000)
@@ -164,6 +165,8 @@ class Message(ABC):
         message_type = MessageType(typeValue)
 
         content = Message.process_content(message_type, buffer)
+
+        print(str(buffer))
 
         # size = len(buffer)
         sourceNodeIdentifier = buffer[-64-32:-64]
