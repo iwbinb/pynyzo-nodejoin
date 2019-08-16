@@ -19,12 +19,14 @@ def test_proxy(ip):
 
 
 def get_list():
+    print('start')
     with open('data/ips', 'r') as f:
         ip_list = []
         for line in f:
             ip_list.append(line.strip())
 
     for ip in ip_list:
+        print(ip)
         if test_proxy(ip):
             q.enqueue(propagate, (ip, 1080))
 
