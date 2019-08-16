@@ -106,13 +106,13 @@ def propagate(target_ip, socks_host, socks_port):
     res = connection.fetch(message)
     print(res.to_json())
 
-propagate('95.216.184.40', '178.197.248.213', 1080)
+propagate('95.216.184.40', '178.197.249.213', 1080)
 
 
-propagate('verifier1.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier2.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier3.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier4.nyzo.co', '178.197.248.213', 1080)
+propagate('verifier1.nyzo.co', '178.197.249.213', 1080)
+propagate('verifier2.nyzo.co', '178.197.249.213', 1080)
+propagate('verifier3.nyzo.co', '178.197.249.213', 1080)
+propagate('verifier4.nyzo.co', '178.197.249.213', 1080)
 propagate('verifier5.nyzo.co', '178.197.248.213', 1080)
 propagate('verifier6.nyzo.co', '178.197.248.213', 1080)
 propagate('verifier7.nyzo.co', '178.197.248.213', 1080)
