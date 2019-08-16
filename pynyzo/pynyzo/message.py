@@ -63,6 +63,7 @@ class Message(ABC):
             """
         else:
             # From another system
+            print('WRONG')
             self._timestamp = timestamp
             self._sourceNodeIdentifier = sourceNodeIdentifier
             self._sourceNodeSignature = sourceNodeSignature
