@@ -24,7 +24,7 @@ class Message(ABC):
 
     # slots for private vars, to spare ram
     __slots__ = ('app_log', '_timestamp', '_type', '_content', '_sourceNodeIdentifier', '_sourceNodeSignature',
-                 '_valid', '_sourceIpAddress', 'valid')
+                 '_valid', '_sourceIpAddress', '_sourceNodePrivateKey', 'valid')
 
     # Static class variables
     maximumMessageLength = 4194304  # 4MB
@@ -45,7 +45,7 @@ class Message(ABC):
         self._type = a_type
         self._content = content
         self._valid = True
-        # self.sourceNodePrivateKey =
+        self._sourceNodePrivateKey = sourceNodePrivateKey
 
         # if sourceNodeIdentifier is None:
         self._timestamp = int(time()*1000)
