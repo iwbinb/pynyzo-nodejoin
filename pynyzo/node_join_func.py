@@ -137,8 +137,8 @@ def propagate(socks_host, socks_port):
             message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
             res = connection.fetch(message)
             print(res.to_json())
-        except:
-            print('Skipped {}'.format(target_ip))
+        except Exception as e:
+            print('Skipped {}, {}'.format(target_ip,e ))
             pass
 
     for i in ips:
