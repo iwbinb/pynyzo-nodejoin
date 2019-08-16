@@ -5,7 +5,7 @@ from pynyzo import config
 from pynyzo.connection import Connection
 from pynyzo.helpers import tornado_logger
 from pynyzo.message import Message
-from pynyzo.messages.nodejoin import NodeJoin
+from .pynyzo.messages.nodejoin import NodeJoin
 from pynyzo.messagetype import MessageType
 
 def get_new_private():
