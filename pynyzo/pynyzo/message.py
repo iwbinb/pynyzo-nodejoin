@@ -176,7 +176,7 @@ class Message(ABC):
 
         message = Message(timestamp=timestamp, a_type=message_type, content=content,
                           sourceNodeIdentifier=sourceNodeIdentifier, sourceNodeSignature=sourceNodeSignature,
-                          source_ip_address=source_ip_address)
+                          source_ip_address=source_ip_address, sourceNodePrivateKey=None)
         return message
 
     @staticmethod
