@@ -25,7 +25,7 @@ class Message(ABC):
 
     # slots for private vars, to spare ram
     __slots__ = ('app_log', '_timestamp', '_type', '_content', '_sourceNodeIdentifier', '_sourceNodeSignature',
-                 '_valid', '_sourceIpAddress', '_sourceNodePrivateKey', 'valid')
+                 '_valid', '_sourceIpAddress', 'valid')
 
     # Static class variables
     maximumMessageLength = 4194304  # 4MB
@@ -37,7 +37,7 @@ class Message(ABC):
     # as a potential pool for random requests for the following types. This reduces strain on in-cycle verifiers.
     fullMeshMessageTypes = (MessageType.BlockRequest11, MessageType.BlockWithVotesRequest37)
 
-    def __init__(self, sourceNodePrivateKey, a_type: MessageType, content: MessageObject, app_log: object = None,
+    def __init__(self, a_type: MessageType, sourceNodePrivateKey, content: MessageObject, app_log: object = None,
                  sourceNodeIdentifier: bytes = None, sourceNodeSignature: bytes=None, source_ip_address: bytes=None, timestamp: int=0):
         """This is the constructor for a new message originating from this system AND from the outside,
         depending on the params."""
