@@ -50,7 +50,7 @@ def load_from_data(s_ip):
     data = open('data/assigns', 'r').read()
     data_dict = ast.literal_eval(data)
     if s_ip is not None:
-        for ip, inner_dict in data_dict.iteritems():
+        for ip, inner_dict in data_dict.items():
             if s_ip == ip:
                 return inner_dict
         return None
