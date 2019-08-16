@@ -54,6 +54,7 @@ class Message(ABC):
             self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), private_key)
         else:
             # From our system
+            print('wrong')
             self._sourceNodeIdentifier = config.PUBLIC_KEY.to_bytes()
             self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), config.PRIVATE_KEY)
             # As a test, we can verify our sig before sending
