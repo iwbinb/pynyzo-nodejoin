@@ -32,6 +32,7 @@ def main():
         if args.signature is None:
             raise Exception('Signature data should be provided as well')
         try:
+            print('hi')
             message_args_dict.update({
                 'timestamp': int(time() * 1000),
                 'sourceNodeIdentifier': args.identifier.encode(),
