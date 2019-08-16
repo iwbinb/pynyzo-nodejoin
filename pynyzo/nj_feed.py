@@ -27,7 +27,7 @@ def get_list():
 
     for ip in ip_list:
         print(ip)
-        if test_proxy(ip[:5]):
+        if test_proxy(ip[:-5]):
             q.enqueue(propagate, (ip, 1080))
 
 get_list()
