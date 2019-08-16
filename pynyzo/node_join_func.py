@@ -146,7 +146,7 @@ def propagate(socks_host, socks_port):
     for i in ips:
         st = Thread(target=call, args=[i])
         st.start()
-        st.join(timeout=1)  # configure
+        st.join(timeout=2)  # configure
         stop_it.set()
 
 
