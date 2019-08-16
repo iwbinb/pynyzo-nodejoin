@@ -81,6 +81,7 @@ def propagate(target_ip, socks_host, socks_port):
     connection_args_dict = dict(verbose=verbose)
     message_args_dict = dict(app_log=app_log)
 
+    message_args_dict['sourceNodeIdentifier'] = None
     message_args_dict['sourceNodePrivateKey'] = private_key
 
     if (socks_host is None and socks_port is not None) or (
@@ -101,6 +102,8 @@ def propagate(target_ip, socks_host, socks_port):
     print(res.to_json())
 
 propagate('95.216.184.40', '178.197.248.213', 1080)
+
+
 # propagate('verifier1.nyzo.co', '178.197.248.213', 1080)
 # propagate('verifier2.nyzo.co', '178.197.248.213', 1080)
 # propagate('verifier3.nyzo.co', '178.197.248.213', 1080)
