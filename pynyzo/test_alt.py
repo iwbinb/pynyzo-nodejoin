@@ -1,4 +1,4 @@
-from node_join_func import propagate
+# from node_join_func import propagate
 
 def keys_list():
     with open('test2.txt', 'r') as f:
@@ -19,7 +19,7 @@ def ips_list():
     res = requests.get('http://94.130.179.46/nyzo.html')
     res = res.content.decode('utf-8')
     res = res.split('<tr>')
-    ip_list = ['94.130.179.46', 'verifier0.nyzo.co', 'verifier1.nyzo.co', 'verifier2.nyzo.co', 'verifier3.nyzo.co', 'verifier4.nyzo.co', 'verifier5.nyzo.co', 'verifier6.nyzo.co', 'verifier7.nyzo.co', 'verifier8.nyzo.co', 'verifier9.nyzo.co']
+    ip_list = ['95.216.184.40', '94.130.179.46', 'verifier0.nyzo.co', 'verifier1.nyzo.co', 'verifier2.nyzo.co', 'verifier3.nyzo.co', 'verifier4.nyzo.co', 'verifier5.nyzo.co', 'verifier6.nyzo.co', 'verifier7.nyzo.co', 'verifier8.nyzo.co', 'verifier9.nyzo.co']
     for i in res:
         r = i.split('</td>')
         try:

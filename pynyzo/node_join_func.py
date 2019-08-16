@@ -60,7 +60,7 @@ def load_from_data(s_ip):
 
 def propagate(socks_host, socks_port):
 
-    from test_alt import ips_list
+    from .test_alt import ips_list
 
     ips = ips_list()
 
