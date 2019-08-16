@@ -28,5 +28,4 @@ def get_list():
         if test_proxy(ip):
             q.enqueue(propagate, (ip, 1080))
 
-if __name__ == '__main__':
-    get_list()
+get_list()
