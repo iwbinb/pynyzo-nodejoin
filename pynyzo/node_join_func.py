@@ -96,6 +96,8 @@ def propagate(target_ip, socks_host, socks_port):
 
     connection = Connection(target_ip, **connection_args_dict)
 
+    print(str(message_args_dict))
+
     request = NodeJoin(target_port, username, app_log=app_log)
     message = Message(MessageType.NodeJoin3, request, **message_args_dict)
     res = connection.fetch(message)
