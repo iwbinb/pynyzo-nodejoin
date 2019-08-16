@@ -45,7 +45,6 @@ class Message(ABC):
         self._type = a_type
         self._content = content
         self._valid = True
-        self._sourceNodePrivateKey = sourceNodePrivateKey
 
         # if sourceNodeIdentifier is None:
         self._timestamp = int(time()*1000)
