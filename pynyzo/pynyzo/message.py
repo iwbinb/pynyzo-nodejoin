@@ -46,38 +46,38 @@ class Message(ABC):
         self._content = content
         self._valid = True
 
-        if sourceNodeIdentifier is None:
-            self._timestamp = int(time()*1000)
-            if sourceNodePrivateKey is not None:
-                private_key, pub_key = KeyUtil.get_from_string(sourceNodePrivateKey)
-                self._sourceNodeIdentifier = pub_key.to_bytes()
-                self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), private_key)
-            else:
-                # From our system
-                self._sourceNodeIdentifier = config.PUBLIC_KEY.to_bytes()
-                self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), config.PRIVATE_KEY)
-                # As a test, we can verify our sig before sending
-            """
-            KeyUtil.signature_is_valid(self._sourceNodeSignature, self.get_bytes_for_signing(), 
-                                       config.PUBLIC_KEY.to_bytes())
-            """
+        # if sourceNodeIdentifier is None:
+        self._timestamp = int(time()*1000)
+        if sourceNodePrivateKey is not None:
+            private_key, pub_key = KeyUtil.get_from_string(sourceNodePrivateKey)
+            self._sourceNodeIdentifier = pub_key.to_bytes()
+            self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), private_key)
         else:
-            # From another system
-            print('WRONG')
-            self._timestamp = timestamp
-            self._sourceNodeIdentifier = sourceNodeIdentifier
-            self._sourceNodeSignature = sourceNodeSignature
-            self._sourceIpAddress = source_ip_address
-            # self._valid = KeyUtil.signature_is_valid(sourceNodeSignature, self.get_bytes_for_signing(),
-            # sourceNodeIdentifier)
-            self.valid = True
-            # TODO: needs all the chain of get_bytes to validate; let suppose for now it is valid.
-            self.app_log.warning(f"TODO: Did NOT validate message from "
-                                 f"{ByteUtil.bytes_as_string_with_dashes(sourceNodeIdentifier)} "
-                                 f"of type {self._type.name}")
-            if not self._valid:
-                self.app_log.warning(f"message from {ByteUtil.bytes_as_string_with_dashes(sourceNodeIdentifier)} "
-                                     f"of type {self._type.name} is not valid")  # Temp log
+            # From our system
+            self._sourceNodeIdentifier = config.PUBLIC_KEY.to_bytes()
+            self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), config.PRIVATE_KEY)
+            # As a test, we can verify our sig before sending
+        """
+        KeyUtil.signature_is_valid(self._sourceNodeSignature, self.get_bytes_for_signing(), 
+                                   config.PUBLIC_KEY.to_bytes())
+        """
+        # else:
+        #     # From another system
+        #     print('WRONG')
+        #     self._timestamp = timestamp
+        #     self._sourceNodeIdentifier = sourceNodeIdentifier
+        #     self._sourceNodeSignature = sourceNodeSignature
+        #     self._sourceIpAddress = source_ip_address
+        #     # self._valid = KeyUtil.signature_is_valid(sourceNodeSignature, self.get_bytes_for_signing(),
+        #     # sourceNodeIdentifier)
+        #     self.valid = True
+        #     # TODO: needs all the chain of get_bytes to validate; let suppose for now it is valid.
+        #     self.app_log.warning(f"TODO: Did NOT validate message from "
+        #                          f"{ByteUtil.bytes_as_string_with_dashes(sourceNodeIdentifier)} "
+        #                          f"of type {self._type.name}")
+        #     if not self._valid:
+        #         self.app_log.warning(f"message from {ByteUtil.bytes_as_string_with_dashes(sourceNodeIdentifier)} "
+        #                              f"of type {self._type.name} is not valid")  # Temp log
 
     def to_string(self) -> str:
         """String view of the message for log/print"""
