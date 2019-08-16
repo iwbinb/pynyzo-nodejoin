@@ -81,9 +81,11 @@ def propagate(target_ip, socks_host, socks_port):
     connection_args_dict = dict(verbose=verbose)
     message_args_dict = dict(app_log=app_log)
 
-    message_args_dict['sourceNodeIdentifier'] = None
-    message_args_dict['sourceNodePrivateKey'] = private_key
-
+    message_args_dict.update({
+        'timestamp': int(time() * 1000),
+        'sourceNodePrivateKey': private_key
+    })
+    
     if (socks_host is None and socks_port is not None) or (
         socks_host is not None and socks_port is None):
         raise Exception('Socks port or socks host is not provided')
