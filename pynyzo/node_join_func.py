@@ -101,4 +101,4 @@ def propagate(target_ip, socks_host, socks_port):
     print(res.to_json())
 
 
-propagate('verifier4.nyzo.co', '41.66.82.21', 9999)
+propagate('verifier4.nyzo.co', '45.55.23.78', 1080)
