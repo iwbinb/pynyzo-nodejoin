@@ -47,7 +47,7 @@ def assign_to_ip(ip):
 
 def load_from_data(s_ip):
     import ast
-    data = open('data/assigns', 'r').read()
+    data = open('data/assign', 'r').read()
     data_dict = ast.literal_eval(data)
     if s_ip is not None:
         for ip, inner_dict in data_dict.items():
@@ -71,6 +71,8 @@ def propagate(target_ip, socks_host, socks_port):
     else:
         username = rres['name']
         private_key = rres['private_key']
+
+    # print(private_key)
 
     verbose = True
     target_port = 9444
@@ -113,9 +115,9 @@ propagate('95.216.184.40', '178.197.249.213', 1080)
 propagate('verifier1.nyzo.co', '178.197.249.213', 1080)
 propagate('verifier2.nyzo.co', '178.197.249.213', 1080)
 propagate('verifier3.nyzo.co', '178.197.249.213', 1080)
-propagate('verifier4.nyzo.co', '178.197.249.213', 1080)
+propagate('verifier4.nyzo.co', '178.197.2449.213', 1080)
 propagate('verifier5.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier6.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier7.nyzo.co', '178.197.248.213', 1080)
-propagate('verifier8.nyzo.co', '178.197.248.213', 1080)
+propagate('verifier6.nyzo.co', '178.197.2448.213', 1080)
+propagate('verifier7.nyzo.co', '178.197.2448.213', 1080)
+propagate('verifier8.nyzo.co', '178.197.244448.213', 1080)
 propagate('verifier9.nyzo.co', '178.197.248.213', 1080)
