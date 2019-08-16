@@ -93,6 +93,7 @@ def propagate(socks_host, socks_port):
     from threading import Thread, Event
     stop_it = Event()
     ips = ips_list()
+    app_log = tornado_logger()
 
     def call(target_ip):
         private_key = None
@@ -111,8 +112,6 @@ def propagate(socks_host, socks_port):
 
         verbose = True
         target_port = 9444
-
-        app_log = tornado_logger()
 
         config.load()
         connection_args_dict = dict(verbose=verbose)
