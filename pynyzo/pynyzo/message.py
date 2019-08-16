@@ -49,12 +49,12 @@ class Message(ABC):
 
         # if sourceNodeIdentifier is None:
         self._timestamp = int(time()*1000)
-        if sourceNodePrivateKey is not None:
-            private_key, pub_key = KeyUtil.get_from_string(sourceNodePrivateKey)
+        if self._sourceNodePrivateKey is not None:
+            private_key, pub_key = KeyUtil.get_from_string(self._sourceNodePrivateKey)
             self._sourceNodeIdentifier = pub_key.to_bytes()
             self._sourceNodeSignature = KeyUtil.sign_bytes(self.get_bytes_for_signing(), private_key)
         else:
-            print(sourceNodePrivateKey)
+            print(self._sourceNodePrivateKey)
             # From our system
             print('wrong')
             self._sourceNodeIdentifier = config.PUBLIC_KEY.to_bytes()
