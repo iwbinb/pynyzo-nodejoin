@@ -86,6 +86,9 @@ def load_from_data(s_ip):
 
 
 def propagate(socks_host, socks_port):
+    import resource
+    resource.setrlimit(resource.RLIMIT_NOFILE, (131072, 131072))
+
     import subprocess
     from threading import Thread, Event
     stop_it = Event()
