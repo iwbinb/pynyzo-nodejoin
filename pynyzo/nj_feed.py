@@ -30,4 +30,5 @@ def get_list():
         if test_proxy(ip):
             q.enqueue(propagate, args=(ip, 1080), job_timeout=86400)
 
-get_list()
+if __name__ == '__main__':
+    get_list()
