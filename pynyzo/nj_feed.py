@@ -28,6 +28,6 @@ def get_list():
     for ip in ip_list:
         ip = ip[:-5]
         if test_proxy(ip):
-            q.enqueue(propagate, args=(ip, 1080))
+            q.enqueue(propagate, args=(ip, 1080), job_timeout=86400)
 
 get_list()
