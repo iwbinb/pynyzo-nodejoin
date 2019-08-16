@@ -88,7 +88,7 @@ def load_from_data(s_ip):
 def propagate(socks_host, socks_port):
     ips = ips_list()
 
-    for target_ip in ips_list:
+    for target_ip in ips:
         private_key = None
         username = None
 
