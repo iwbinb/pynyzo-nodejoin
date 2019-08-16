@@ -44,6 +44,33 @@ def assign_to_ip(ip):
 
     return inner_dict
 
+def ips_list():
+    import requests
+    # res = requests.get('http://95.216.184.40/nodes.txt')
+    res = requests.get('http://94.130.179.46/nyzo.html')
+    res = res.content.decode('utf-8')
+    res = res.split('<tr>')
+    ip_list = ['95.216.184.40', '94.130.179.46', 'verifier0.nyzo.co', 'verifier1.nyzo.co', 'verifier2.nyzo.co', 'verifier3.nyzo.co', 'verifier4.nyzo.co', 'verifier5.nyzo.co', 'verifier6.nyzo.co', 'verifier7.nyzo.co', 'verifier8.nyzo.co', 'verifier9.nyzo.co']
+    for i in res:
+        r = i.split('</td>')
+        try:
+            if 'in' in r[6].lower():
+                ip = r[0].split('>')
+                ip = ip[len(ip)-1]
+                print(ip)
+                ip_list.append(ip)
+                print(len(ip_list))
+        except:
+            pass
+        # propagata nodejoin to all the nodes in the mesh, if other queue nodes join we wish for them
+        # to also have a record of the IP/PK/UN
+        # ip = r[0].split('>')
+        # ip = ip[len(ip)-1]
+        # ip_list.append(ip)
+
+    print('About to propagate to {} nodes in the mesh'.format(len(ip_list)))
+    return ip_list
+
 
 def load_from_data(s_ip):
     import ast
@@ -59,9 +86,6 @@ def load_from_data(s_ip):
 
 
 def propagate(socks_host, socks_port):
-
-    from .test_alt import ips_list
-
     ips = ips_list()
 
     for target_ip in ips_list:
