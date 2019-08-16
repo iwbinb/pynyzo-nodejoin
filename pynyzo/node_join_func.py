@@ -83,7 +83,7 @@ def propagate(target_ip, socks_host, socks_port):
 
     message_args_dict.update({
         'timestamp': int(time() * 1000),
-        '_sourceNodePrivateKey': private_key
+        'sourceNodePrivateKey': private_key
     })
 
     if (socks_host is None and socks_port is not None) or (

@@ -37,9 +37,8 @@ class Message(ABC):
     # as a potential pool for random requests for the following types. This reduces strain on in-cycle verifiers.
     fullMeshMessageTypes = (MessageType.BlockRequest11, MessageType.BlockWithVotesRequest37)
 
-    def __init__(self, a_type: MessageType, content: MessageObject, app_log: object = None,
-                 sourceNodeIdentifier: bytes = None, sourceNodeSignature: bytes=None, source_ip_address: bytes=None,
-                 sourceNodePrivateKey: str=None, timestamp: int=0):
+    def __init__(self, sourceNodePrivateKey, a_type: MessageType, content: MessageObject, app_log: object = None,
+                 sourceNodeIdentifier: bytes = None, sourceNodeSignature: bytes=None, source_ip_address: bytes=None, timestamp: int=0):
         """This is the constructor for a new message originating from this system AND from the outside,
         depending on the params."""
         self.app_log = base_app_log(app_log)
