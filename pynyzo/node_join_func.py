@@ -100,6 +100,7 @@ def propagate(target_ip, socks_host, socks_port):
 
     # with open('/root/pynyzo-nodejoin/pynyzo/tmp/verifier_private_seed', 'w') as f:
     #     f.write(private_key)
+    print(private_key)
 
     request = NodeJoin(target_port, username, app_log=app_log)
     message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
