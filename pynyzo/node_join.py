@@ -41,7 +41,11 @@ def main():
         except Exception:
             raise Exception("Provided data in the arguments for identifier or signature are not correct")
 
-    message_args_dict['sourceNodePrivateKey'] = args.private_key
+    message_args_dict.update({
+        'timestamp': int(time() * 1000),
+        'sourceNodePrivateKey': args.private_key
+    })
+    # message_args_dict['sourceNodePrivateKey'] = args.private_key
 
     if (args.socks_host is None and args.socks_port is not None) or (
         args.socks_host is not None and args.socks_port is None):
