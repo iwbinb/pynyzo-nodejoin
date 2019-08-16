@@ -21,6 +21,7 @@ __version__ = '0.0.1'
 
 class Message(ABC):
     """Abstract Ancestor for all messages."""
+    print(globals())
 
     # slots for private vars, to spare ram
     __slots__ = ('app_log', '_timestamp', '_type', '_content', '_sourceNodeIdentifier', '_sourceNodeSignature',
