@@ -1,1 +1,1 @@
-# pynyzo-nodejoin
+# pynyzo-nodejoin nyzo
