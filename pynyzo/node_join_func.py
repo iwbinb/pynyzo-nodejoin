@@ -69,7 +69,7 @@ def ips_list():
     for i in res:
         r = i.split('</td>')
         try:
-            if 'in' in r[6].lower():
+            if 'Cycle' in r[6].lower():
                 ip = r[0].split('>')
                 ip = ip[len(ip)-1]
                 print(ip)
