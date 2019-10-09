@@ -37,8 +37,9 @@ def update_ip_data(ip, k, v):
     ip_inner = data_dict[ip]
     ip_inner.update({k: v})
     data_dict.update({ip: ip_inner})
-
-    q.enqueue(new_ip_data, args=(str(data_dict),), job_timeout=86400)
+    data_dict = str(data_dict)
+    
+    q.enqueue(new_ip_data, args=(data_dict), job_timeout=86400)
 
     # with open('data/assign', 'w') as f:
     #     f.write(str(data_dict))
@@ -50,8 +51,9 @@ def assign_to_ip(ip):
     data_dict = load_from_data(None)
     inner_dict = {'private_key': get_new_private(), 'name': u, 'last_ts': None}
     data_dict.update({ip: inner_dict})
+    data_dict = str(data_dict)
 
-    q.enqueue(new_ip_data, args=(str(data_dict),), job_timeout=86400)
+    q.enqueue(new_ip_data, args=(data_dict), job_timeout=86400)
     # with open('data/assign', 'w') as f:
     #     f.write(str(data_dict))
 
