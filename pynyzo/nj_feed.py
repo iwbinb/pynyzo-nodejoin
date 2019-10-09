@@ -3,12 +3,12 @@ from rq import Queue
 from node_join_func import propagate
 q = Queue('ipflow', connection=Redis())
 
-def test_proxy(ip):
+def test_proxy(ip, port):
     print('testing proxy {}'.format(ip))
     import socks
     try:
         sock = socks.socksocket()
-        sock.set_proxy(socks.SOCKS5, ip, 1080)
+        sock.set_proxy(socks.SOCKS5, ip, port)
         sock.settimeout(2)
         sock.connect(('www.google.com', 80))
     except:
@@ -30,7 +30,7 @@ def get_list():
         ip_s = ip.split(':')
         ip = ip_s[0]
         port = ip_s[1]
-        if test_proxy(ip):
+        if test_proxy(ip, port):
             # q.enqueue(propagate, args=(ip, 1080), job_timeout=86400)
             q.enqueue(propagate, args=(ip, port), job_timeout=86400)
 
