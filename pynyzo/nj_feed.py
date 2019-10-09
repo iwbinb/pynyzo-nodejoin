@@ -22,6 +22,7 @@ def test_proxy(ip, port):
         except:
             return False
     else:
+        print('using {}'.format(ip))
         return True
     finally:
         sock.close()
