@@ -27,7 +27,6 @@ def test_proxy(ip, port):
     finally:
         sock.close()
 
-
 def get_list():
     print('start')
     with open('data/ips', 'r') as f:

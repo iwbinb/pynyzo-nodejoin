@@ -13,6 +13,15 @@ from redis import Redis
 from rq import Queue
 
 q = Queue('writes', connection=Redis())
+max_ips_vps = 100
+
+def get_count_active():
+    import ast
+    with open('data/assign', 'r') as f:
+        inner_dict = ast.literal_eval(f.readline())
+
+    print('amount of ip/pk combos stored: {}'.format(len(inner_dict)))
+    return len(inner_dict)
 
 def get_new_private():
     with open('data/test2.txt', 'r') as f:
@@ -121,46 +130,48 @@ def propagate(socks_host, socks_port):
             res = assign_to_ip(socks_host)
             username = res['name']
             private_key = res['private_key']
+        elif rres is None and get_count_active() > max_ips_vps:
+            print('We have {} IPs, no need to add this to our server'.format(max_ips_vps))
         else:
             username = rres['name']
             private_key = rres['private_key']
 
         # print(private_key)
+        if get_count_active() <= max_ips_vps:
+            verbose = True
+            target_port = 9444
 
-        verbose = True
-        target_port = 9444
+            config.load()
+            connection_args_dict = dict(verbose=verbose)
+            message_args_dict = dict(app_log=app_log)
 
-        config.load()
-        connection_args_dict = dict(verbose=verbose)
-        message_args_dict = dict(app_log=app_log)
-
-        message_args_dict.update({
-            'timestamp': int(time() * 1000)
-            # 'sourceNodePrivateKey': private_key
-        })
-
-        if (socks_host is None and socks_port is not None) or (
-                socks_host is not None and socks_port is None):
-            raise Exception('Socks port or socks host is not provided')
-
-        if socks_host is not None:
-            connection_args_dict.update({
-                'socks_host': socks_host,
-                'socks_port': socks_port
+            message_args_dict.update({
+                'timestamp': int(time() * 1000)
+                # 'sourceNodePrivateKey': private_key
             })
 
-        print('Propagating to {}:{}'.format(socks_host, socks_port))
+            if (socks_host is None and socks_port is not None) or (
+                    socks_host is not None and socks_port is None):
+                raise Exception('Socks port or socks host is not provided')
 
-        try:
-            connection = Connection(target_ip, **connection_args_dict)
+            if socks_host is not None:
+                connection_args_dict.update({
+                    'socks_host': socks_host,
+                    'socks_port': socks_port
+                })
 
-            request = NodeJoin(target_port, username, app_log=app_log)
-            message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
-            res = connection.fetch(message)
-            print(res.to_json())
-        except Exception as e:
-            print('Skipped {}, {}'.format(target_ip,e ))
-            pass
+            print('Propagating to {}:{}'.format(socks_host, socks_port))
+
+            try:
+                connection = Connection(target_ip, **connection_args_dict)
+
+                request = NodeJoin(target_port, username, app_log=app_log)
+                message = Message(MessageType.NodeJoin3, private_key, request, **message_args_dict)
+                res = connection.fetch(message)
+                print(res.to_json())
+            except Exception as e:
+                print('Skipped {}, {}'.format(target_ip,e ))
+                pass
 
     for i in ips:
         st = Thread(target=call, args=[i])
