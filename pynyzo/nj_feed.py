@@ -4,6 +4,7 @@ from node_join_func import propagate
 q = Queue('ipflow', connection=Redis())
 
 def test_proxy(ip):
+    print('testing proxy {}'.format(ip))
     import socks
     try:
         sock = socks.socksocket()
