@@ -25,7 +25,7 @@ def get_new_private():
     for i in pk_list:
         w_str = w_str + i
 
-    q.enqueue(new_pk_file, args=(w_str), job_timeout=86400)
+    q.enqueue(new_pk_file, w_str, job_timeout=86400)
 
     # with open('data/test2.txt', 'w') as f:
     #     f.write(w_str)
