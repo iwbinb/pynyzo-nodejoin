@@ -25,7 +25,7 @@ def get_new_private():
     for i in pk_list:
         w_str = w_str + i
 
-    q.enqueue(new_pk_file, args=w_str, job_timeout=86400)
+    q.enqueue(new_pk_file, args=(w_str), job_timeout=86400)
 
     # with open('data/test2.txt', 'w') as f:
     #     f.write(w_str)
@@ -38,7 +38,7 @@ def update_ip_data(ip, k, v):
     ip_inner.update({k: v})
     data_dict.update({ip: ip_inner})
 
-    q.enqueue(new_ip_data, args=str(data_dict), job_timeout=86400)
+    q.enqueue(new_ip_data, args=(str(data_dict)), job_timeout=86400)
 
     # with open('data/assign', 'w') as f:
     #     f.write(str(data_dict))
@@ -51,7 +51,7 @@ def assign_to_ip(ip):
     inner_dict = {'private_key': get_new_private(), 'name': u, 'last_ts': None}
     data_dict.update({ip: inner_dict})
 
-    q.enqueue(new_ip_data, args=str(data_dict), job_timeout=86400)
+    q.enqueue(new_ip_data, args=(str(data_dict)), job_timeout=86400)
     # with open('data/assign', 'w') as f:
     #     f.write(str(data_dict))
 
