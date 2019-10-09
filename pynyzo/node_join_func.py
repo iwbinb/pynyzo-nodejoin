@@ -62,21 +62,21 @@ def assign_to_ip(ip):
 def ips_list():
     import requests
     # res = requests.get('http://95.216.184.40/nodes.txt')
-    # res = requests.get('http://94.130.179.46/nyzo.html')
-    # res = res.content.decode('utf-8')
-    # res = res.split('<tr>')
+    res = requests.get('http://94.130.179.46/nyzo.html')
+    res = res.content.decode('utf-8')
+    res = res.split('<tr>')
     ip_list = ['95.216.184.40', '94.130.179.46', 'verifier0.nyzo.co', 'verifier1.nyzo.co', 'verifier2.nyzo.co', 'verifier3.nyzo.co', 'verifier4.nyzo.co', 'verifier5.nyzo.co', 'verifier6.nyzo.co', 'verifier7.nyzo.co', 'verifier8.nyzo.co', 'verifier9.nyzo.co']
-    # for i in res:
-    #     r = i.split('</td>')
-    #     try:
-    #         if 'in' in r[6].lower():
-    #             ip = r[0].split('>')
-    #             ip = ip[len(ip)-1]
-    #             print(ip)
-    #             ip_list.append(ip)
-    #             print(len(ip_list))
-    #     except:
-    #         pass
+    for i in res:
+        r = i.split('</td>')
+        try:
+            if 'in' in r[6].lower():
+                ip = r[0].split('>')
+                ip = ip[len(ip)-1]
+                print(ip)
+                ip_list.append(ip)
+                print(len(ip_list))
+        except:
+            pass
 
 
         # propagata nodejoin to all the nodes in the mesh, if other queue nodes join we wish for them
