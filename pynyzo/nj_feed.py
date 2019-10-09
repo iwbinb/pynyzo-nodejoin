@@ -12,7 +12,13 @@ def test_proxy(ip, port):
         sock.settimeout(2)
         sock.connect(('www.google.com', 80))
     except:
-        return False
+        try:
+            sock = socks.socksocket()
+            sock.set_proxy(socks.SOCKS4, ip, port)
+            sock.settimeout(2)
+            sock.connect(('www.google.com', 80))
+        except:
+            return False
     else:
         return True
     finally:
