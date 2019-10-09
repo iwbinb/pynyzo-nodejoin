@@ -11,8 +11,10 @@ def test_proxy(ip, port):
         sock.set_proxy(socks.SOCKS5, ip, port)
         sock.settimeout(2)
         sock.connect(('www.google.com', 80))
-    except:
+    except Exception as e:
+        print(e)
         try:
+            print('testing socks4')
             sock = socks.socksocket()
             sock.set_proxy(socks.SOCKS4, ip, port)
             sock.settimeout(2)
