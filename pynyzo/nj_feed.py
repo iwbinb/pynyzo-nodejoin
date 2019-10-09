@@ -38,6 +38,7 @@ def get_list():
         ip_s = ip.split(':')
         ip = ip_s[0]
         port = ip_s[1]
+        print(port)
         if test_proxy(ip, port):
             # q.enqueue(propagate, args=(ip, 1080), job_timeout=86400)
             q.enqueue(propagate, args=(ip, port), job_timeout=86400)
