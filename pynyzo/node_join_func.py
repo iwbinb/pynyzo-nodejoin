@@ -8,6 +8,12 @@ from pynyzo.message import Message
 from pynyzo.messages.nodejoin import NodeJoin
 from pynyzo.messagetype import MessageType
 
+from nj_writehandler import new_pk_file, new_ip_data
+from redis import Redis
+from rq import Queue
+
+q = Queue('writes', connection=Redis())
+
 def get_new_private():
     with open('data/test2.txt', 'r') as f:
         pk_list = f.readlines()
@@ -19,8 +25,10 @@ def get_new_private():
     for i in pk_list:
         w_str = w_str + i
 
-    with open('data/test2.txt', 'w') as f:
-        f.write(w_str)
+    q.enqueue(new_pk_file, args=w_str, job_timeout=86400)
+
+    # with open('data/test2.txt', 'w') as f:
+    #     f.write(w_str)
 
     return new_pk.strip()
 
@@ -29,8 +37,11 @@ def update_ip_data(ip, k, v):
     ip_inner = data_dict[ip]
     ip_inner.update({k: v})
     data_dict.update({ip: ip_inner})
-    with open('data/assign', 'w') as f:
-        f.write(str(data_dict))
+
+    q.enqueue(new_ip_data, args=str(data_dict), job_timeout=86400)
+
+    # with open('data/assign', 'w') as f:
+    #     f.write(str(data_dict))
 
 def assign_to_ip(ip):
     import random
@@ -39,8 +50,10 @@ def assign_to_ip(ip):
     data_dict = load_from_data(None)
     inner_dict = {'private_key': get_new_private(), 'name': u, 'last_ts': None}
     data_dict.update({ip: inner_dict})
-    with open('data/assign', 'w') as f:
-        f.write(str(data_dict))
+
+    q.enqueue(new_ip_data, args=str(data_dict), job_timeout=86400)
+    # with open('data/assign', 'w') as f:
+    #     f.write(str(data_dict))
 
     return inner_dict
 
