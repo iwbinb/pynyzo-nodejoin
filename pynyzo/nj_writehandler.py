@@ -1,10 +1,3 @@
-from redis import Redis
-from rq import Queue
-
-# avoids race conditions by handling write events in chronological order
-
-q = Queue('writes', connection=Redis())
-
 def new_pk_file(pk_list_popped):
     with open('data/test2.txt', 'w') as f:
         f.write(pk_list_popped)
